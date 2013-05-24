@@ -1,6 +1,6 @@
 ## Guts
 
-The Guts gem allows you to parse out content and metadata from a news article.
+The Guts gem allows you to extract content and metadata from a given news article in HTML.
 
 _This gem is in an extremely experimental state right now_
 
@@ -17,6 +17,9 @@ page.author
 
 page.date
 => Thu, 23 May 2013 21:10:00 EDT -04:00
+
+page.images
+=> [#<Guts::Image:0x007fa905c58c20>]
 
 page.content
 => "Dear Mariano Rivera,\n\nWhoa, whoa, whoa. Slow down. You're amazing, Mo. But take it easy. You're making everyone else look terrible.\n\nLook: All of baseball thought it was a good idea for you to come back. OK, that's not totally true. People were worried."
