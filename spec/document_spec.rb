@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe Document do
   describe ".new" do
-    let(:file) { read_fixture("sports/airalamo.com") }
+    let(:html) { read_fixture("sports/airalamo.com") }
 
     it "should initialize content" do
-      doc = Document.new(:content => content)
+      doc = Document.new(html)
+      expect(doc.html).to eq html
     end
   end
 end
