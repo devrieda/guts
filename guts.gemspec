@@ -22,6 +22,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_runtime_dependency("curb",     "~> 0.8")
+  gem.add_runtime_dependency("sanitize", "~> 2.0")
   gem.add_runtime_dependency("nokogiri", "~> 1.5")
 
   gem.add_development_dependency("rspec", "~> 2.9")
