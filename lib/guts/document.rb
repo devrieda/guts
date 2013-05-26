@@ -11,6 +11,11 @@ module Guts
                             :remove_contents => true)
     end
 
+    def title
+      @title = parser.css("title").text
+    end
+
+
     private
 
     def sanitizer(sanitizer = Sanitize)

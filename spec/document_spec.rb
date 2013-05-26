@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe Document do
@@ -98,4 +100,12 @@ describe Document do
     end
   end
 
+  describe "#title" do
+    let(:html) { read_fixture("parse_title.html") }
+    let(:doc)  { Document.new(html) }
+
+    it "should parse title from document" do
+      expect(doc.title).to eq "Derek DeVries | New SportSpyder Homepage"
+    end
+  end
 end
