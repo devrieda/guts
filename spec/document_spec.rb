@@ -46,6 +46,31 @@ describe Document do
       end
     end
 
+    describe "with frames" do
+      let(:html) { read_fixture("strip_frames.html") }
+      let(:doc)  { Document.new(html) }
+
+      it "should strip out frameset tags" do
+        expect(doc.html).to include("<frameset")
+        expect(doc.content).to_not include("<frameset")
+      end
+
+      it "should strip out frame tags" do
+        expect(doc.html).to include("<frame")
+        expect(doc.content).to_not include("<frame")
+      end
+
+      it "should strip out noframe tags" do
+        expect(doc.html).to include("<noframe")
+        expect(doc.content).to_not include("<noframe")
+      end
+
+      it "should strip out iframe tags" do
+        expect(doc.html).to include("<iframe")
+        expect(doc.content).to_not include("<iframe")
+      end
+    end
+
     describe "with comments" do
       let(:html) { read_fixture("strip_comments.html") }
       let(:doc)  { Document.new(html) }
@@ -72,5 +97,4 @@ describe Document do
       end
     end
   end
-
 end
