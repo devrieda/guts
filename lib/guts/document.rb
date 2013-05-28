@@ -7,8 +7,10 @@ module Guts
     end
 
     def content
-      sanitizer.clean(html, :elements        => accepted_elements,
-                            :remove_contents => true)
+      strip_scripts_and_frames
+      strip_comments
+
+      parser.to_s
     end
 
     def title
@@ -18,31 +20,17 @@ module Guts
 
     private
 
-    def sanitizer(sanitizer = Sanitize)
-      @sanitizer = sanitizer
+    def strip_scripts_and_frames
+      strip = "style, script, noscript, frameset, frame, noframes, iframe"
+      parser.css(strip).each { |i| i.remove }
+    end
+
+    def strip_comments
+      parser.xpath('//comment()').each { |i| i.remove }
     end
 
     def parser
       @parser ||= Nokogiri::HTML(@html)
-    end
-
-    def stripped_elements
-      %w{script style noscript frameset frame noframe iframe }
-    end
-
-    def accepted_elements
-      %w{
-        a abbr acronym address applet area article aside audio b base basefont
-        bdi bdo big blockquote body br button canvas caption center cite code
-        col colgroup command datalist dd del details dfn dialog dir div dl dt
-        em embed fieldset figcaption figure font footer form h1
-        h2 h3 h4 h5 h6 head header hgroup hr html i img input ins kbd
-        keygen label legend li link map mark menu meta meter nav object
-        ol optgroup option output p param pre progress q rp rt ruby s samp
-        section select small source span strike strong sub summary sup
-        table tbody td textarea tfoot th thead time title tr track tt u ul var
-        video wbr
-      }
     end
 
     def block_elements
