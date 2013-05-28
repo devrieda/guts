@@ -26,6 +26,10 @@ module Guts
       @parser ||= Nokogiri::HTML(@html)
     end
 
+    def stripped_elements
+      %w{script style noscript frameset frame noframe iframe }
+    end
+
     def accepted_elements
       %w{
         a abbr acronym address applet area article aside audio b base basefont
