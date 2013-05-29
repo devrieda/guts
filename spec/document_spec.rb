@@ -111,6 +111,16 @@ describe Document do
         expect(doc.content).to_not include("Echo Foxtrot")
       end
     end
+
+    describe "with unconventional indentation" do
+      let(:html) { read_fixture("tidy_html.html") }
+      let(:doc)  { Document.new(html) }
+
+      it "should tidy up the content" do
+        expect(doc.html.split("\n").length).to eq 1
+        expect(doc.cleaned_markup.split("\n").length).to eq 9
+      end
+    end
   end
 
   describe "#title" do

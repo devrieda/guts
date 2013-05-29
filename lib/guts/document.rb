@@ -2,35 +2,38 @@ module Guts
   class Document
     attr_accessor :html
 
-    def initialize(html)
-      @html = html
+    def initialize(input)
+      @html = input
     end
 
     def content
+      @content = cleaned_markup
+    end
+
+    def cleaned_markup
       strip_scripts_and_frames
       strip_comments
 
-      parser.to_s
+      html_doc.to_s
     end
 
     def title
-      @title = parser.css("title").text
+      @title = html_doc.css("title").text
     end
-
 
     private
 
     def strip_scripts_and_frames
       strip = "style, script, noscript, frameset, frame, noframes, iframe"
-      parser.css(strip).each { |i| i.remove }
+      html_doc.css(strip).each { |i| i.remove }
     end
 
     def strip_comments
-      parser.xpath('//comment()').each { |i| i.remove }
+      html_doc.xpath('//comment()').each { |i| i.remove }
     end
 
-    def parser
-      @parser ||= Nokogiri::HTML(@html)
+    def html_doc
+      @html_doc ||= Nokogiri::HTML(tidied = Nokogiri::HTML(html).to_html)
     end
 
     def block_elements
