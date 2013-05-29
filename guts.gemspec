@@ -26,7 +26,6 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency("nokogiri", "~> 1.5")
 
   gem.add_development_dependency("rspec", "~> 2.9")
-  gem.add_development_dependency("cucumber", "~> 1.2")
 
   # guard
   gem.add_development_dependency("guard", "~> 1.7")
