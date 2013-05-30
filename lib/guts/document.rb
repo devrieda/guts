@@ -6,19 +6,23 @@ module Guts
       @html = input
     end
 
+    def title
+      @title ||= html_doc.css("title").text
+    end
+
     def content
-      cleaned_markup
+      cleaned_markup.to_s
+    end
+
+    def body
+      @body ||= cleaned_markup.css("body").to_s
     end
 
     def cleaned_markup
       strip_scripts_and_frames
       strip_comments
 
-      html_doc.to_s
-    end
-
-    def title
-      @title ||= html_doc.css("title").text
+      html_doc
     end
 
     private
