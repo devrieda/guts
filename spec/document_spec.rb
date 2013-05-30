@@ -153,6 +153,20 @@ describe Document do
     end
   end
 
+  describe "#lines" do
+    let(:html) { read_fixture("parse_body.html") }
+    let(:doc)  { Document.new(html) }
+
+    it "should split out lines from the body" do
+      expect(doc.lines.length).to eq 5
+    end
+
+    it "should strip out preceeding indentation from the line" do
+      expected = ["<body>", "<div>", "<p>The Body</p>", "</div>", "</body>"]
+      expect(doc.lines).to eq expected
+    end
+  end
+
   describe "#title" do
     let(:html) { read_fixture("parse_title.html") }
     let(:doc)  { Document.new(html) }
@@ -161,4 +175,5 @@ describe Document do
       expect(doc.title).to eq "Derek DeVries | New SportSpyder Homepage"
     end
   end
+
 end

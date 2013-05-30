@@ -18,6 +18,10 @@ module Guts
       @body ||= cleaned_markup.css("body").to_s
     end
 
+    def lines
+      body.split("\n").map {|line| line.strip }
+    end
+
     def cleaned_markup
       strip_scripts_and_frames
       strip_comments
