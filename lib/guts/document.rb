@@ -23,7 +23,6 @@ module Guts
 
     private
 
-
     def strip_scripts_and_frames
       strip = "style, script, noscript, frameset, frame, noframes, iframe"
       html_doc.css(strip).each { |i| i.remove }
@@ -38,9 +37,7 @@ module Guts
     end
 
     def tidied_html
-      tidied = Nokogiri::HTML(html).to_html
-      tidied = tidied.gsub(/\n+/, "\n")
-      tidied
+      Nokogiri::HTML(html.gsub(/\n+/, "\n")).to_xhtml
     end
 
     def block_elements

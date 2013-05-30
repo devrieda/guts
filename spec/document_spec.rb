@@ -116,9 +116,9 @@ describe Document do
       let(:html) { read_fixture("tidy_whitespace.html") }
       let(:doc)  { Document.new(html) }
 
-      it "should tidy up the content" do
+      it "should clean up indentation and newlines" do
         expect(doc.html.split("\n").length).to eq 1
-        expect(doc.cleaned_markup.split("\n").length).to eq 9
+        expect(doc.cleaned_markup.split("\n").length).to eq 13
       end
     end
 
@@ -136,7 +136,7 @@ describe Document do
       let(:html) { read_fixture("tidy_newlines.html") }
       let(:doc)  { Document.new(html) }
 
-      it "should tidy up the content" do
+      it "should remove excess newlines" do
         expect(doc.html.split("\n").length).to eq 16
         expect(doc.cleaned_markup.split("\n").length).to eq 13
       end
