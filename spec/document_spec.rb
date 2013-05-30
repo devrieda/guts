@@ -113,7 +113,7 @@ describe Document do
     end
 
     describe "with unconventional indentation" do
-      let(:html) { read_fixture("tidy_html.html") }
+      let(:html) { read_fixture("tidy_whitespace.html") }
       let(:doc)  { Document.new(html) }
 
       it "should tidy up the content" do
