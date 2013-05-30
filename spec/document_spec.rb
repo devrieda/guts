@@ -121,6 +121,16 @@ describe Document do
         expect(doc.cleaned_markup.split("\n").length).to eq 9
       end
     end
+
+    describe "with missing closing tags" do
+      let(:html) { read_fixture("tidy_closing_tags.html") }
+      let(:doc)  { Document.new(html) }
+
+      it "should close mismatched tags" do
+        expect(doc.html).to_not include("</p>")
+        expect(doc.cleaned_markup).to include("</p>")
+      end
+    end
   end
 
   describe "#title" do
