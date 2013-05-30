@@ -131,6 +131,16 @@ describe Document do
         expect(doc.cleaned_markup).to include("</p>")
       end
     end
+
+    describe "with empty newlines" do
+      let(:html) { read_fixture("tidy_newlines.html") }
+      let(:doc)  { Document.new(html) }
+
+      it "should tidy up the content" do
+        expect(doc.html.split("\n").length).to eq 16
+        expect(doc.cleaned_markup.split("\n").length).to eq 13
+      end
+    end
   end
 
   describe "#title" do

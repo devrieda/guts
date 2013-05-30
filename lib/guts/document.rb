@@ -7,7 +7,7 @@ module Guts
     end
 
     def content
-      @content = cleaned_markup
+      cleaned_markup
     end
 
     def cleaned_markup
@@ -18,10 +18,11 @@ module Guts
     end
 
     def title
-      @title = html_doc.css("title").text
+      @title ||= html_doc.css("title").text
     end
 
     private
+
 
     def strip_scripts_and_frames
       strip = "style, script, noscript, frameset, frame, noframes, iframe"
@@ -33,7 +34,13 @@ module Guts
     end
 
     def html_doc
-      @html_doc ||= Nokogiri::HTML(tidied = Nokogiri::HTML(html).to_html)
+      @html_doc ||= Nokogiri::HTML(tidied_html)
+    end
+
+    def tidied_html
+      tidied = Nokogiri::HTML(html).to_html
+      tidied = tidied.gsub(/\n+/, "\n")
+      tidied
     end
 
     def block_elements
