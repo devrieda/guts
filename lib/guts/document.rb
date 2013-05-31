@@ -15,21 +15,20 @@ module Guts
     end
 
     def body
-      @body ||= cleaned_markup.css("body").to_s
+      @body ||= cleaned_markup.css("body").children.to_s.strip
     end
 
     def lines
       body.split("\n").map {|line| line.strip }
     end
 
+    private
+
     def cleaned_markup
       strip_scripts_and_frames
       strip_comments
-
       html_doc
     end
-
-    private
 
     def strip_scripts_and_frames
       strip = "style, script, noscript, frameset, frame, noframes, iframe"

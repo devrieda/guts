@@ -118,7 +118,17 @@ describe Document do
 
       it "should clean up indentation and newlines" do
         expect(doc.html.split("\n").length).to eq 1
-        expect(doc.cleaned_markup.to_s.split("\n").length).to eq 13
+        expect(doc.body.split("\n").length).to eq 3
+      end
+    end
+
+    describe "with empty newlines" do
+      let(:html) { read_fixture("tidy_newlines.html") }
+      let(:doc)  { Document.new(html) }
+
+      it "should remove excess newlines" do
+        expect(doc.html.split("\n").length).to eq 18
+        expect(doc.body.split("\n").length).to eq 3
       end
     end
 
@@ -128,17 +138,7 @@ describe Document do
 
       it "should close mismatched tags" do
         expect(doc.html).to_not include("</p>")
-        expect(doc.cleaned_markup.to_s).to include("</p>")
-      end
-    end
-
-    describe "with empty newlines" do
-      let(:html) { read_fixture("tidy_newlines.html") }
-      let(:doc)  { Document.new(html) }
-
-      it "should remove excess newlines" do
-        expect(doc.html.split("\n").length).to eq 16
-        expect(doc.cleaned_markup.to_s.split("\n").length).to eq 13
+        expect(doc.body).to include("</p>")
       end
     end
   end
@@ -148,22 +148,8 @@ describe Document do
     let(:doc)  { Document.new(html) }
 
     it "should parse the body from the document" do
-      body = "<body>\n  <div>\n    <p>The Body</p>\n  </div>\n</body>"
+      body = "<div>\n    <p>The     Body</p>\n  </div>"
       expect(doc.body).to eq body
-    end
-  end
-
-  describe "#lines" do
-    let(:html) { read_fixture("parse_body.html") }
-    let(:doc)  { Document.new(html) }
-
-    it "should split out lines from the body" do
-      expect(doc.lines.length).to eq 5
-    end
-
-    it "should strip out preceeding indentation from the line" do
-      expected = ["<body>", "<div>", "<p>The Body</p>", "</div>", "</body>"]
-      expect(doc.lines).to eq expected
     end
   end
 
