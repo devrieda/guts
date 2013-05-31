@@ -153,6 +153,17 @@ describe Document do
     end
   end
 
+  describe "#text_tag_ratio" do
+    let(:html) { read_fixture("parse_ttr.html") }
+
+    it "should call calculate" do
+      calculator = double("ttr")
+      calculator.should_receive(:calculate)
+
+      Document.new(html).text_tag_ratio(calculator)
+    end
+  end
+
   describe "#title" do
     let(:html) { read_fixture("parse_title.html") }
     let(:doc)  { Document.new(html) }

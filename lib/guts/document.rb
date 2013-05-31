@@ -18,11 +18,15 @@ module Guts
       @body ||= cleaned_markup.css("body").children.to_s.strip
     end
 
-    def lines
-      body.split("\n").map {|line| line.strip }
+    def text_tag_ratio(calculator = nil)
+      (calculator || ttr_calculator).calculate
     end
 
     private
+
+    def ttr_calculator
+      TextTagRatioCalculator.new(body)
+    end
 
     def cleaned_markup
       strip_scripts_and_frames
