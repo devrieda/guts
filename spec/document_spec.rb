@@ -153,6 +153,15 @@ describe Document do
     end
   end
 
+  describe "#headings" do
+    let(:html) { read_fixture("parse_headings.html") }
+    let(:doc)  { Document.new(html) }
+
+    it "should parse the headings from the document" do
+      expect(doc.headings.length).to eq 4
+    end
+  end
+
   describe "#text_tag_ratio" do
     let(:html) { read_fixture("parse_ttr.html") }
 

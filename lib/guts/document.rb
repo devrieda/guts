@@ -18,6 +18,10 @@ module Guts
       @body ||= cleaned_markup.css("body").children.to_s.strip
     end
 
+    def headings
+      @headings ||= cleaned_markup.css("h1, h2, h3").to_a
+    end
+
     def text_tag_ratio(calculator = nil)
       (calculator || ttr_calculator).calculate
     end
