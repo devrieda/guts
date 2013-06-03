@@ -141,6 +141,16 @@ describe Document do
         expect(doc.body).to include("</p>")
       end
     end
+
+    describe "with invalid utf8 chars" do
+      let(:html) { "<p>foo bar\255</p>" }
+      let(:doc)  { Document.new(html) }
+
+      it "should strip out invalid utf8" do
+        expect(doc.body).to_not raise_error(ArgumentError)
+        expect(doc.body).to eq "<p>foo bar</p>"
+      end
+    end
   end
 
   describe "#body" do
