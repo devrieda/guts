@@ -22,6 +22,16 @@ module Guts
       @headings ||= cleaned_markup.css("h1, h2, h3").to_a
     end
 
+    def headline
+      headline = nil
+      headings.each do |heading|
+        text = heading.text
+        headline = text if title.include?(text)
+      end
+
+      headline
+    end
+
     def text_tag_ratio(calculator = nil)
       (calculator || ttr_calculator).calculate
     end

@@ -172,6 +172,36 @@ describe Document do
     end
   end
 
+  describe "#headline" do
+    it "should parse the headline from h1 when header 1 is present in title" do
+      html = read_fixture("parse_headline_h1.html")
+      doc  = Document.new(html)
+
+      expect(doc.headline).to eq "SEC baseball LSU sends Bama"
+    end
+
+    it "should parse the headline from h2 when header 2 is present in title" do
+      html = read_fixture("parse_headline_h2.html")
+      doc  = Document.new(html)
+
+      expect(doc.headline).to eq "SEC baseball LSU sends Bama"
+    end
+
+    it "should parse the headline from h3 when header 3 is present in title" do
+      html = read_fixture("parse_headline_h3.html")
+      doc  = Document.new(html)
+
+      expect(doc.headline).to eq "SEC baseball LSU sends Bama"
+    end
+
+    # Dir["#{File.dirname(__FILE__)}/fixtures/articles/*"].each_with_index do |file, i|
+    #   doc = Document.new(File.read(file))
+    #   puts "\n---------------#{i}. #{file}---------------"
+    #   puts doc.title
+    #   puts doc.headline
+    # end
+  end
+
   describe "#text_tag_ratio" do
     let(:html) { read_fixture("parse_ttr.html") }
 
