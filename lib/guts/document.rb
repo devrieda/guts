@@ -19,17 +19,11 @@ module Guts
     end
 
     def headings
-      @headings ||= cleaned_markup.css("h1, h2, h3").to_a
+      @headings ||= cleaned_markup.css("h1, h2, h3").map {|h| h.text }
     end
 
     def headline
-      headline = nil
-      headings.each do |heading|
-        text = heading.text
-        headline = text if title.include?(text)
-      end
-
-      headline
+      @headline = headline_from_headings
     end
 
     def text_tag_ratio(calculator = nil)
@@ -37,6 +31,10 @@ module Guts
     end
 
     private
+
+    def headline_from_headings
+      headings.find {|heading| title.include?(heading) }
+    end
 
     def ttr_calculator
       TextTagRatioCalculator.new(body)
