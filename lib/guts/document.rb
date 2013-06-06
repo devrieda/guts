@@ -18,12 +18,8 @@ module Guts
       @body ||= cleaned_markup.css("body").children.to_s.strip
     end
 
-    def headings
-      @headings ||= cleaned_markup.css("h1, h2, h3").map {|h| h.text }
-    end
-
     def headline
-      @headline = headline_from_headings
+      HeadlineParser.new(self).headline
     end
 
     def text_tag_ratio(calculator = nil)
@@ -38,14 +34,9 @@ module Guts
 
     private
 
-    def headline_from_headings
-      headings.find {|heading| title.include?(heading) }
-    end
-
     def ttr_calculator
       TextTagRatioCalculator.new(body)
     end
-
 
     def strip_scripts_and_frames
       strip = "style, script, noscript, frameset, frame, noframes, iframe"
