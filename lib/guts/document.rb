@@ -30,6 +30,12 @@ module Guts
       (calculator || ttr_calculator).calculate
     end
 
+    def cleaned_markup
+      strip_scripts_and_frames
+      strip_comments
+      html_doc
+    end
+
     private
 
     def headline_from_headings
@@ -40,11 +46,6 @@ module Guts
       TextTagRatioCalculator.new(body)
     end
 
-    def cleaned_markup
-      strip_scripts_and_frames
-      strip_comments
-      html_doc
-    end
 
     def strip_scripts_and_frames
       strip = "style, script, noscript, frameset, frame, noframes, iframe"

@@ -153,6 +153,15 @@ describe Document do
     end
   end
 
+  describe "#cleaned_markup" do
+    let(:html) { read_fixture("strip_script.html") }
+    let(:doc)  { Document.new(html) }
+
+    it "should return cleaned markup node" do
+      expect(doc.cleaned_markup).to be_a(Nokogiri::HTML::Document)
+    end
+  end
+
   describe "#body" do
     let(:html) { read_fixture("parse_body.html") }
     let(:doc)  { Document.new(html) }
@@ -161,45 +170,6 @@ describe Document do
       body = "<div>\n    <p>The     Body</p>\n  </div>"
       expect(doc.body).to eq body
     end
-  end
-
-  describe "#headings" do
-    let(:html) { read_fixture("parse_headings.html") }
-    let(:doc)  { Document.new(html) }
-
-    it "should parse the headings from the document" do
-      expect(doc.headings.length).to eq 4
-    end
-  end
-
-  describe "#headline" do
-    it "should parse the headline from h1 when header 1 is present in title" do
-      html = read_fixture("parse_headline_h1.html")
-      doc  = Document.new(html)
-
-      expect(doc.headline).to eq "SEC baseball LSU sends Bama"
-    end
-
-    it "should parse the headline from h2 when header 2 is present in title" do
-      html = read_fixture("parse_headline_h2.html")
-      doc  = Document.new(html)
-
-      expect(doc.headline).to eq "SEC baseball LSU sends Bama"
-    end
-
-    it "should parse the headline from h3 when header 3 is present in title" do
-      html = read_fixture("parse_headline_h3.html")
-      doc  = Document.new(html)
-
-      expect(doc.headline).to eq "SEC baseball LSU sends Bama"
-    end
-
-    # Dir["#{File.dirname(__FILE__)}/fixtures/articles/*"].each_with_index do |file, i|
-    #   doc = Document.new(File.read(file))
-    #   puts "\n---------------#{i}. #{file}---------------"
-    #   puts doc.title
-    #   puts doc.headline
-    # end
   end
 
   describe "#text_tag_ratio" do
