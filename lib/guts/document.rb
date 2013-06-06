@@ -7,7 +7,7 @@ module Guts
     end
 
     def title
-      @title ||= html_doc.css("title").text
+      @title ||= cleaned_markup.css("title").text
     end
 
     def content
