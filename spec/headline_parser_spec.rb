@@ -4,13 +4,9 @@ describe HeadlineParser do
   describe "#headline" do
   end
 
-  describe "#title" do
-  end
-
   describe "#headings" do
-
     it "should parse the headings from the document" do
-      doc = Document.new(read_fixture("parse_headings.html"))
+      doc = Document.new(read_fixture("headlines/parse_headings.html"))
       parser = HeadlineParser.new(doc)
 
       expect(parser.headings.length).to eq 4
@@ -18,25 +14,65 @@ describe HeadlineParser do
   end
 
   describe "#headline" do
-    it "should parse the headline from h1 when header 1 is present in title" do
-      doc = Document.new(read_fixture("parse_headline_h1.html"))
-      parser = HeadlineParser.new(doc)
+    describe "with semantic html headers" do
+      it "parses headline from h1 and title" do
+        doc = Document.new(read_fixture("headlines/parse_headline_h1.html"))
+        parser = HeadlineParser.new(doc)
 
-      expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+
+      it "parses headline from h2 and title" do
+        doc = Document.new(read_fixture("headlines/parse_headline_h2.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+
+      it "parses headline from h3 and title" do
+        doc = Document.new(read_fixture("headlines/parse_headline_h3.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
     end
 
-    it "should parse the headline from h2 when header 2 is present in title" do
-      doc = Document.new(read_fixture("parse_headline_h2.html"))
-      parser = HeadlineParser.new(doc)
+    describe "without semantic html headers" do
+      it "parses the headline from the title separated by pipes" do
+        doc = Document.new(read_fixture("headlines/parse_headline_title_pipes.html"))
+        parser = HeadlineParser.new(doc)
 
-      expect(parser.headline).to eq "SEC baseball LSU sends Bama"
-    end
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
 
-    it "should parse the headline from h3 when header 3 is present in title" do
-      doc = Document.new(read_fixture("parse_headline_h3.html"))
-      parser = HeadlineParser.new(doc)
+      it "parses the headline from the title separated by pipes reverse ordered" do
+        doc = Document.new(read_fixture("headlines/parse_headline_title_pipes_reverse.html"))
+        parser = HeadlineParser.new(doc)
 
-      expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+
+      it "parses the headline from the title separated by dashes" do
+        doc = Document.new(read_fixture("headlines/parse_headline_title_dashes.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+
+      it "parses the headline from the title separated by laquo" do
+        doc = Document.new(read_fixture("headlines/parse_headline_title_laquo.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+
+      it "parses the headline from the title separated by raquo" do
+        doc = Document.new(read_fixture("headlines/parse_headline_title_raquo.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+
     end
 
     # Dir["#{File.dirname(__FILE__)}/fixtures/articles/*"].each_with_index do |file, i|
