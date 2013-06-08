@@ -73,6 +73,12 @@ describe HeadlineParser do
         expect(parser.headline).to eq "SEC baseball LSU sends Bama"
       end
 
+      it "parses the headline with no separators" do
+        doc = Document.new(read_fixture("headlines/parse_headline_no_title_separators.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to be_nil
+      end
     end
 
     # Dir["#{File.dirname(__FILE__)}/fixtures/articles/*"].each_with_index do |file, i|

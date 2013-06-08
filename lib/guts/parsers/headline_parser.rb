@@ -25,16 +25,14 @@ module Guts
     end
 
     def headline_from_title
-      match = nil
-      headline_separators.each do |sep|
-        next if match || !title.include?(sep)
-        match = title.split(sep).sort_by {|w| w.length }.reverse.first.strip
+      titles = title_separators.map do |sep|
+        title.split(sep).sort_by {|w| w.length }.reverse.first.strip
       end
-      match
+      titles.first
     end
 
-    def headline_separators
-      ["|", "«", "»", "-"]
+    def title_separators
+      ["|", "«", "»", "-"].select {|sep| title.include?(sep) }
     end
 
     def title
