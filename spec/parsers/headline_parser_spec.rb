@@ -78,9 +78,7 @@ describe HeadlineParser do
     # Dir["#{File.dirname(__FILE__)}/fixtures/articles/*"].each_with_index do |file, i|
     #   doc = Document.new(File.read(file))
     #   unless doc.headline
-    #     puts "\n---------------#{i}. #{file}---------------"
-    #     puts doc.title
-    #     puts doc.headline
+    #     puts "\n---------------#{i}. #{file}---------------" unless doc.headline
     #   end
     # end
   end
