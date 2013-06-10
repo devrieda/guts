@@ -29,6 +29,13 @@ describe HeadlineParser do
         expect(parser.headline).to eq "SEC baseball LSU sends Bama"
       end
 
+      it "skips false negative blog text from h1 and title" do
+        doc = Document.new(read_fixture("headlines/parse_headline_h1_blog.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+
       it "parses headline from h2 and title" do
         doc = Document.new(read_fixture("headlines/parse_headline_h2.html"))
         parser = HeadlineParser.new(doc)

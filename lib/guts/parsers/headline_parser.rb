@@ -24,7 +24,8 @@ module Guts
 
     def headline_from_headings
       headings.find do |heading|
-        title.downcase.include?(heading.downcase)
+        lower = heading.downcase
+        lower_title.include?(lower) && !false_positives.include?(lower)
       end
     end
 
@@ -36,12 +37,20 @@ module Guts
       titles.first || title
     end
 
+    def false_positives
+      %w{blog}
+    end
+
     def title_separators
       %w{| « » : -}.select {|sep| title.include?(sep) }
     end
 
     def title
       @title ||= @document.title
+    end
+
+    def lower_title
+      @lower_title ||= title.downcase
     end
 
     def html_doc
