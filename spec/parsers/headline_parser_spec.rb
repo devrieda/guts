@@ -2,16 +2,6 @@ require 'spec_helper'
 
 describe HeadlineParser do
   describe "#headline" do
-
-    it "test" do
-
-      # Dir["#{File.dirname(__FILE__)}/../fixtures/articles/*"].each_with_index do |file, i|
-      #   doc = Document.new(File.read(file))
-      #   unless doc.headline
-      #     puts "\n---------------#{i}. #{file}---------------" unless doc.headline
-      #   end
-      # end
-    end
   end
 
   describe "#headings" do
@@ -90,12 +80,18 @@ describe HeadlineParser do
         expect(parser.headline).to eq "SEC baseball LSU sends Bama"
       end
 
-      it "parses the headline with no separators" do
+      it "parses the headline from the title with no separators" do
         doc = Document.new(read_fixture("headlines/parse_headline_no_title_separators.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to be_nil
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
       end
+    end
+
+    Dir["#{File.dirname(__FILE__)}/../fixtures/articles/*"].each_with_index do |file, i|
+      doc = Document.new(File.read(file))
+      puts "\n---------------#{i}. #{doc.headline}--------------"
+      puts "---------------#{File.basename(file)}"
     end
   end
 

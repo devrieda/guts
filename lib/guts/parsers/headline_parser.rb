@@ -28,7 +28,8 @@ module Guts
       titles = title_separators.map do |sep|
         title.split(sep).sort_by {|w| w.length }.reverse.first.strip
       end
-      titles.first
+
+      titles.first || title
     end
 
     def title_separators
