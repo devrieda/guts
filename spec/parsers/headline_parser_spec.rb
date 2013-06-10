@@ -22,6 +22,13 @@ describe HeadlineParser do
         expect(parser.headline).to eq "SEC baseball LSU sends Bama"
       end
 
+      it "parses headline from h1 and title with spaces" do
+        doc = Document.new(read_fixture("headlines/parse_headline_h1_spaces.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+
       it "parses headline from h2 and title" do
         doc = Document.new(read_fixture("headlines/parse_headline_h2.html"))
         parser = HeadlineParser.new(doc)
@@ -88,11 +95,11 @@ describe HeadlineParser do
       end
     end
 
-    Dir["#{File.dirname(__FILE__)}/../fixtures/articles/*"].each_with_index do |file, i|
-      doc = Document.new(File.read(file))
-      puts "\n---------------#{i}. #{doc.headline}--------------"
-      puts "---------------#{File.basename(file)}"
-    end
+    # Dir["#{File.dirname(__FILE__)}/../fixtures/articles/*"].each_with_index do |file, i|
+    #   doc = Document.new(File.read(file))
+    #   puts "\n---------------#{i}. #{doc.headline}--------------"
+    #   puts "---------------#{File.basename(file)}"
+    # end
   end
 
 end

@@ -6,12 +6,8 @@ module Guts
       @document = document
     end
 
-
     def headings
-      @headings ||= html_doc.css("h1, h2, h3").map {|h| h.text }
-    end
-
-    def heading_classes
+      cleaned_headings.select {|h| h && h != "" }
     end
 
     def headline
@@ -20,8 +16,16 @@ module Guts
 
     private
 
+    def cleaned_headings
+      @cleaned_headings ||= html_doc.css("h1, h2, h3").map do |h|
+        h.text.gsub(/\s+/, " ").strip
+      end
+    end
+
     def headline_from_headings
-      headings.find {|heading| title.include?(heading) }
+      headings.find do |heading|
+        title.downcase.include?(heading.downcase)
+      end
     end
 
     def headline_from_title
