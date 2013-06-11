@@ -59,6 +59,14 @@ describe HeadlineParser do
     end
 
     describe "without semantic html headers" do
+
+      it "parses the headline to use the most frequently found separator" do
+        doc = Document.new(read_fixture("headlines/title_separator_frequency.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "Grit-N-Grind - We Knew Game Two Was Going to Be Different"
+      end
+
       it "parses the headline from the title separated by pipes" do
         doc = Document.new(read_fixture("headlines/title_pipes.html"))
         parser = HeadlineParser.new(doc)

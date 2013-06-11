@@ -51,7 +51,12 @@ module Guts
     end
 
     def title_separators
-      [" | ", " « ", " » ", " - ", ": "].select {|sep| title.include?(sep) }
+      title_separators_by_frequency.select {|sep| title.include?(sep) }
+    end
+
+    def title_separators_by_frequency
+      seps = [" | ", " « ", " » ", " - ", ": "]
+      seps.sort_by {|sep| title.scan(sep).count }.reverse
     end
 
     def title
