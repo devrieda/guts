@@ -36,6 +36,13 @@ describe HeadlineParser do
         expect(parser.headline).to eq "SEC baseball LSU sends Bama"
       end
 
+      it "skips false negative blog text from h1 and title" do
+        doc = Document.new(read_fixture("headlines/parse_headline_h1_blog2.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+
       it "parses headline from h2 and title" do
         doc = Document.new(read_fixture("headlines/parse_headline_h2.html"))
         parser = HeadlineParser.new(doc)
@@ -103,10 +110,15 @@ describe HeadlineParser do
     end
 
     # Dir["#{File.dirname(__FILE__)}/../fixtures/articles/*"].each_with_index do |file, i|
+    #   next unless i+1 < 100
     #   doc = Document.new(File.read(file))
-    #   puts "\n---------------#{i}. #{doc.headline}--------------"
+    #   puts "\n---------------#{i+1}. #{doc.headline}--------------"
+    #   url = File.open(file) {|f| f.readline }.gsub("<!-- ", "").gsub(" -->", "").strip
+    #   # `open #{url}`
+    #   puts url
     #   puts "---------------#{File.basename(file)}"
     # end
+
   end
 
 end

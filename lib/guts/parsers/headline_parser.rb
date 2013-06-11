@@ -22,23 +22,32 @@ module Guts
       end
     end
 
+    # parse from headings / title
     def headline_from_headings
-      headings.find do |heading|
-        lower = heading.downcase
-        lower_title.include?(lower) && !false_positives.include?(lower)
+      headings.find do |h|
+        title_includes_heading?(h) && !heading_matches_false_positive?(h)
       end
     end
 
+    def title_includes_heading?(heading)
+      lower_title.include?(heading.downcase)
+    end
+
+    def heading_matches_false_positive?(heading)
+      heading.match(/#{false_positives.join("|")}/i)
+    end
+
+    def false_positives
+      %w{blog}
+    end
+
+    # parse headline from title
     def headline_from_title
       titles = title_separators.map do |sep|
         title.split(sep).sort_by {|w| w.length }.reverse.first.strip
       end
 
       titles.first || title
-    end
-
-    def false_positives
-      %w{blog}
     end
 
     def title_separators
