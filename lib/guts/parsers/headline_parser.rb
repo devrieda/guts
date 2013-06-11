@@ -24,13 +24,15 @@ module Guts
 
     # parse from headings / title
     def headline_from_headings
-      headings.find do |h|
+      in_title = headings.select do |heading|
+        h = heading.downcase.gsub(/\s+/m, " ").strip
         title_includes_heading?(h) && !heading_matches_false_positive?(h)
       end
+      in_title.sort_by {|h| h.length }.reverse.first
     end
 
     def title_includes_heading?(heading)
-      lower_title.include?(heading.downcase)
+      lower_title.include?(heading)
     end
 
     def heading_matches_false_positive?(heading)
@@ -64,7 +66,7 @@ module Guts
     end
 
     def lower_title
-      @lower_title ||= title.downcase
+      @lower_title ||= title.gsub(/\s+/m, " ").downcase
     end
 
     def html_doc

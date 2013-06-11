@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe HeadlineParser do
@@ -27,6 +29,15 @@ describe HeadlineParser do
         parser = HeadlineParser.new(doc)
 
         expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+
+      it "parses headline from h1 with multiple h1s in title" do
+        doc = Document.new(read_fixture("headlines/h1_multiples.html"))
+        parser = HeadlineParser.new(doc)
+
+        expected = "Sounders’ travel guru figures next four games could call " +
+                   "for 10 flights; among toughest he’s arranged"
+        expect(parser.headline).to eq
       end
 
       it "skips false negative blog text from h1 and title" do
