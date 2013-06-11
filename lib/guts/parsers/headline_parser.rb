@@ -51,7 +51,7 @@ module Guts
     end
 
     def title_separators
-      %w{| « » : -}.select {|sep| title.include?(sep) }
+      [" | ", " « ", " » ", " - ", ": "].select {|sep| title.include?(sep) }
     end
 
     def title
