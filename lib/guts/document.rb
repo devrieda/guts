@@ -2,12 +2,17 @@ module Guts
   class Document
     attr_accessor :html
 
-    def initialize(input)
+    def initialize(input, options = {})
       @html = input
+      @url  = options[:url]
     end
 
     def title
       @title ||= cleaned_markup.css("title").text
+    end
+
+    def url
+      @url
     end
 
     def content

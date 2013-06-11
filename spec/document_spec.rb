@@ -4,11 +4,25 @@ require 'spec_helper'
 
 describe Document do
   describe ".new" do
-    let(:html) { read_fixture("articles/airalamo.com") }
+    let(:html) { read_fixture("index.html") }
 
     it "should initialize content" do
       doc = Document.new(html)
       expect(doc.html).to eq html
+    end
+  end
+
+  describe "#url" do
+    let(:html) { read_fixture("index.html") }
+
+    it "should return the url" do
+      doc = Document.new(html, :url => "http://sportspyder.com")
+      expect(doc.url).to eq "http://sportspyder.com"
+    end
+
+    it "should return nil if no url provided" do
+      doc = Document.new(html)
+      expect(doc.url).to be_nil
     end
   end
 
