@@ -37,7 +37,7 @@ describe HeadlineParser do
 
         expected = "Sounders’ travel guru figures next four games could call " +
                    "for 10 flights; among toughest he’s arranged"
-        expect(parser.headline).to eq
+        expect(parser.headline).to eq expected
       end
 
       it "skips false negative blog text from h1 and title" do
@@ -141,12 +141,10 @@ describe HeadlineParser do
     #   head = HeadlineParser.new(doc)
     #
     #   puts "\n---------------#{i+1}. #{doc.headline}--------------"
-    #   p head.send(:title_separators)
-    #   p head.send(:title_sections)
     #
     #   url = File.open(file) {|f| f.readline }.gsub("<!-- ", "").gsub(" -->", "").strip
-    #   # `open #{url}`
     #   puts url
+    #   # `open #{url}`
     #   # puts "---------------#{File.basename(file)}"
     # end
 
