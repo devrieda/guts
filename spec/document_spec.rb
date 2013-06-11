@@ -165,6 +165,15 @@ describe Document do
         expect(doc.body).to eq "<p>foo bar</p>"
       end
     end
+
+    describe "with nbsp" do
+      let(:html) { "<p>foo bar&nbsp;</p>" }
+      let(:doc)  { Document.new(html) }
+
+      it "should replace &nbsp; with spaces" do
+        expect(doc.body).to eq "<p>foo bar </p>"
+      end
+    end
   end
 
   describe "#cleaned_markup" do

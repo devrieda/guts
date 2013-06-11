@@ -57,11 +57,23 @@ module Guts
     end
 
     def tidied_html
-      Nokogiri::HTML(clean_utf8.gsub(/\n+/, "\n")).to_xhtml
+      cleaned = clean_utf8(html)
+      cleaned = clean_nbsp(cleaned)
+      cleaned = clean_newlines(cleaned)
+
+      Nokogiri::HTML(cleaned).to_xhtml
     end
 
-    def clean_utf8
-      html.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+    def clean_utf8(text)
+      text.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+    end
+
+    def clean_nbsp(text)
+      text.gsub("&nbsp;", " ")
+    end
+
+    def clean_newlines(text)
+      text.gsub(/\n+/, "\n")
     end
 
     def block_elements
