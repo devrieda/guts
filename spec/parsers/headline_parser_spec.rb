@@ -70,12 +70,18 @@ describe HeadlineParser do
     end
 
     describe "without semantic html headers" do
-
       it "parses the headline to use the most frequently found separator" do
         doc = Document.new(read_fixture("headlines/title_separator_frequency.html"))
         parser = HeadlineParser.new(doc)
 
         expect(parser.headline).to eq "Grit-N-Grind - We Knew Game Two Was Going to Be Different"
+      end
+
+      it "parses the headline to use the separator by order" do
+        doc = Document.new(read_fixture("headlines/title_separator_order.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "Dennis Seidenberg on playing Game 4: \"There's a chance for sure\""
       end
 
       it "parses the headline from the title separated by pipes" do
@@ -133,6 +139,11 @@ describe HeadlineParser do
 
         expect(parser.headline).to eq "SEC baseball LSU sends Bama"
       end
+
+      it "tests" do
+        doc = Document.new(read_fixture("headlines/no_title_separators.html"))
+        parser = HeadlineParser.new(doc)
+      end
     end
 
     # Dir["#{File.dirname(__FILE__)}/../fixtures/articles/*"].each_with_index do |file, i|
@@ -141,9 +152,8 @@ describe HeadlineParser do
     #   head = HeadlineParser.new(doc)
     #
     #   puts "\n---------------#{i+1}. #{doc.headline}--------------"
+    #   puts File.open(file) {|f| f.readline }.gsub("<!-- ", "").gsub(" -->", "").strip
     #
-    #   url = File.open(file) {|f| f.readline }.gsub("<!-- ", "").gsub(" -->", "").strip
-    #   puts url
     #   # `open #{url}`
     #   # puts "---------------#{File.basename(file)}"
     # end

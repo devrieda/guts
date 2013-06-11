@@ -45,20 +45,28 @@ module Guts
 
     # parse headline from title
     def headline_from_title
-      titles = title_separators.map do |sep|
-        title.split(sep).sort_by {|w| w.length }.reverse.first.strip
-      end
-
-      titles.first || title
+      title_parts.sort_by {|w| w.length }.reverse.first.strip
     end
 
-    def title_separators
-      title_separators_by_frequency.select {|sep| title.include?(sep) }
+    def title_parts
+      title_separator ? title.split(title_separator) : [title]
+    end
+
+    def title_separator
+      title_separators_by_frequency.select {|sep| title.include?(sep) }.first
     end
 
     def title_separators_by_frequency
-      seps = [" | ", " « ", " » ", " - ", ": "]
-      seps.sort_by {|sep| title.scan(sep).count }.reverse
+      title_separators.sort do |x, y|
+        count_x, count_y = title.scan(x).count,       title.scan(y).count
+        index_x, index_y = title_separators.index(x), title_separators.index(y)
+
+        count_x == count_y ? index_x <=> index_y : count_y <=> count_x
+      end
+    end
+
+    def title_separators
+      [" | ", " « ", " » ", " - ", ": "]
     end
 
     def title
