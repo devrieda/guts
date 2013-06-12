@@ -26,6 +26,20 @@ describe Document do
     end
   end
 
+  describe "#name" do
+    let(:html) { read_fixture("index.html") }
+
+    it "should return the site name" do
+      doc = Document.new(html, :name => "SportSpyder")
+      expect(doc.name).to eq "SportSpyder"
+    end
+
+    it "should return nil if no url provided" do
+      doc = Document.new(html)
+      expect(doc.name).to be_nil
+    end
+  end
+
   describe "#content" do
     describe "with styles" do
       let(:html) { read_fixture("strip_style.html") }

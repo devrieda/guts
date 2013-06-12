@@ -1,18 +1,15 @@
 module Guts
   class Document
-    attr_accessor :html
+    attr_accessor :html, :url, :name
 
     def initialize(input, options = {})
       @html = input
       @url  = options[:url]
+      @name = options[:name]
     end
 
     def title
       @title ||= cleaned_markup.css("title").text
-    end
-
-    def url
-      @url
     end
 
     def content
