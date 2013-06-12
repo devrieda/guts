@@ -30,7 +30,7 @@ module Guts
     end
 
     def heading_matches_false_positive?(heading)
-      heading.match(/#{false_positives.join("|")}/i)
+      heading.match(/#{false_positives.join("|")}/i) || heading == site_name
     end
 
 
@@ -97,6 +97,10 @@ module Guts
 
     def title_separators
       [" | ", " « ", " » ", " - ", ": "]
+    end
+
+    def site_name
+      @site_name ||= "#{@document.site_name}".downcase
     end
 
     def title

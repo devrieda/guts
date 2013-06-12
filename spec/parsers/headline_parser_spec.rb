@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe HeadlineParser do
   describe "#headline" do
+
     describe "with html headers in title" do
       it "parses headline from h1 and title" do
         doc = Document.new(read_fixture("headlines/h1.html"))
@@ -28,18 +29,25 @@ describe HeadlineParser do
         expect(parser.headline).to eq expected
       end
 
-      it "skips false negative blog text from h1 and title" do
+      it "skips false positive from 'blog' text from h1 and title" do
         doc = Document.new(read_fixture("headlines/h1_blog.html"))
         parser = HeadlineParser.new(doc)
 
         expect(parser.headline).to eq "SEC baseball LSU sends Bama"
       end
 
-      it "skips false negative blog text from h1 and title" do
+      it "skips false positive from 'blog' text from h2 and title" do
         doc = Document.new(read_fixture("headlines/h1_blog2.html"))
         parser = HeadlineParser.new(doc)
 
         expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+
+      it "skips false positive from site name in title" do
+        doc = Document.new(read_fixture("og_sitename.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "Flacco Filling Out"
       end
 
       it "parses headline from h2 and title" do
@@ -150,7 +158,7 @@ describe HeadlineParser do
     #   doc = Document.new(File.read(file))
     #   head = HeadlineParser.new(doc)
     #
-    #   puts "\n#{i+1}. #{doc.headline}--------------"
+    #   puts "\n#{i+1}. #{head.headline}--------------"
     #   puts File.open(file) {|f| f.readline }.gsub("<!-- ", "").gsub(" -->", "").strip
     #
     #   # `open #{url}`
@@ -168,10 +176,6 @@ describe HeadlineParser do
   #       "Bruins Insider"
   #       "Rangers taking it one game a time, Stralman likely out for Game 4"
   #
-  #     "http://dimemag.com/2013/05/fast-five-the-cavs-should-shock-the-world-take-lebrons-replacement-in-the-nba-draft-otto-porter-jr/"
-  #       "Daily NBA News, NBA Trades, NBA Rumors, Basketball Videos, Sneakers  » Blog Archive  The Cavs Should Take LeBron's Replacement In The Draft"
-  #       "FAST FIVE: THE CAVS SHOULD SHOCK THE WORLD & TAKE LEBRON’S REPLACEMENT IN THE NBA DRAFT: OTTO PORTER JR."
-  #
   #     "http://mlb.mlb.com/mlb/gameday/index.jsp?gid=2013_05_22_minmlb_atlmlb_1&mode=recap_home&c_id=atl"
   #       "braves.com: Gameday"
   #       "Gattis' slam powers Braves' sixth straight win"
@@ -183,14 +187,6 @@ describe HeadlineParser do
   #     "http://stats.newyork.cbslocal.com/mlb/recap.asp?g=330522121"
   #       "Scores & Stats"
   #       "Phillips' strange double lifts Reds over Mets 7-4"
-  #
-  #     "http://www.astroscounty.com/2013/05/draft-update.html"
-  #       "Your Neighborhood Astros Blog & Grill"
-  #       "Draft Update"
-  #
-  #     "http://www.baltimorebeatdown.com/2013/5/22/4356624/flacco-filling-out"
-  #       "Baltimore Beat Down"
-  #       "Flacco Filling Out"
   #   end
   # end
 end
