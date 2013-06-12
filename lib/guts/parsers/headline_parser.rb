@@ -6,44 +6,74 @@ module Guts
       @document = document
     end
 
-    def headings
-      cleaned_headings.select {|h| h && h != "" }
-    end
-
     def headline
-      @headline = headline_from_headings || headline_from_title
+      @headline = headline_from_headings_in_title ||
+                  headline_from_semantic_headlines ||
+                  headline_from_title
     end
 
     private
 
-    def cleaned_headings
-      @cleaned_headings ||= html_doc.css("h1, h2, h3").map do |h|
-        h.text.gsub(/\s+/, " ").strip
-      end
-    end
-
     # parse from headings / title
-    def headline_from_headings
-      in_title = headings.select do |heading|
-        h = heading.downcase.gsub(/\s+/m, " ").strip
-        title_includes_heading?(h) && !heading_matches_false_positive?(h)
+    def headline_from_headings_in_title
+      headers = headings.select do |heading_hash|
+        title_includes_heading?(heading_hash[:text].downcase)
       end
-      in_title.sort_by {|h| h.length }.reverse.first
+
+      header = headers.sort_by {|h| h[:text].length }.reverse.first
+      header && header[:text]
     end
 
     def title_includes_heading?(heading)
-      lower_title.include?(heading)
+      lower_title.include?(heading) &&
+        !heading_matches_false_positive?(heading)
     end
 
     def heading_matches_false_positive?(heading)
       heading.match(/#{false_positives.join("|")}/i)
     end
 
+
+    # parse from headings that look like a headline
+
+    def headline_from_semantic_headlines
+      headers = headings.select do |heading_hash|
+        header_looks_like_headline?(heading_hash[:text])
+      end
+
+      header = headers.sort_by {|h| h[:text].length }.reverse.first
+      header && header[:text]
+    end
+
+    def header_looks_like_headline?(heading)
+      words = heading.split(" ")
+
+      capital  = words.select {|w| w.capitalize == w }.count
+      perc_cap = (capital / words.count.to_f) * 100
+      invalid  = heading.count("…") > 0 || heading.count("|") > 0
+
+      words.count >= 7 && perc_cap >= 75 && !invalid &&
+        !heading_matches_false_positive?(heading)
+    end
+
+    def headings
+      unless @headings
+        headings = html_doc.css("h1, h2, h3").map do |h|
+          text = h.text.gsub(/\s+/m, " ").strip
+          {:text => text, :tag => h.name, :class => h["class"] }
+        end
+        @headings = headings.select {|h| h && h[:text] != "" }
+      end
+      @headings
+    end
+
     def false_positives
       %w{blog}
     end
 
+
     # parse headline from title
+
     def headline_from_title
       title_parts.sort_by {|w| w.length }.reverse.first.strip
     end

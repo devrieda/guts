@@ -4,19 +4,7 @@ require 'spec_helper'
 
 describe HeadlineParser do
   describe "#headline" do
-  end
-
-  describe "#headings" do
-    it "should parse the headings from the document" do
-      doc = Document.new(read_fixture("headlines/all_hs.html"))
-      parser = HeadlineParser.new(doc)
-
-      expect(parser.headings.length).to eq 4
-    end
-  end
-
-  describe "#headline" do
-    describe "with semantic html headers" do
+    describe "with html headers in title" do
       it "parses headline from h1 and title" do
         doc = Document.new(read_fixture("headlines/h1.html"))
         parser = HeadlineParser.new(doc)
@@ -69,7 +57,23 @@ describe HeadlineParser do
       end
     end
 
-    describe "without semantic html headers" do
+    describe "with html headers that look like headlines" do
+      it "parses headline from h1 that looks like a headline" do
+        doc = Document.new(read_fixture("headlines/h1_headline_semantics.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "Fast Five: The Cavs Should Shock The World & Take LeBrons Replacement In The NBA Draft: Otto Porter Jr."
+      end
+
+      it "doesn't parses headline from h1 that doesn't looks like a headline" do
+        doc = Document.new(read_fixture("headlines/h1_headline_no_semantics.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+    end
+
+    describe "without html headers" do
       it "parses the headline to use the most frequently found separator" do
         doc = Document.new(read_fixture("headlines/title_separator_frequency.html"))
         parser = HeadlineParser.new(doc)
@@ -139,11 +143,6 @@ describe HeadlineParser do
 
         expect(parser.headline).to eq "SEC baseball LSU sends Bama"
       end
-
-      it "tests" do
-        doc = Document.new(read_fixture("headlines/no_title_separators.html"))
-        parser = HeadlineParser.new(doc)
-      end
     end
 
     # Dir["#{File.dirname(__FILE__)}/../fixtures/articles/*"].each_with_index do |file, i|
@@ -151,13 +150,47 @@ describe HeadlineParser do
     #   doc = Document.new(File.read(file))
     #   head = HeadlineParser.new(doc)
     #
-    #   puts "\n---------------#{i+1}. #{doc.headline}--------------"
+    #   puts "\n#{i+1}. #{doc.headline}--------------"
     #   puts File.open(file) {|f| f.readline }.gsub("<!-- ", "").gsub(" -->", "").strip
     #
     #   # `open #{url}`
     #   # puts "---------------#{File.basename(file)}"
     # end
-
   end
 
+  # describe "non-standard headlines" do
+  #   it "should parse" do
+  #     doc = Document.new(read_fixture("articles/dimemag.com"))
+  #     parser = HeadlineParser.new(doc)
+  #     p parser.headline
+  #
+  #     "http://bostonherald.com/sports/bruins_nhl/bruins_insider/2013/05/rangers_taking_it_one_game_a_time_stralman_likely_out_for"
+  #       "Bruins Insider"
+  #       "Rangers taking it one game a time, Stralman likely out for Game 4"
+  #
+  #     "http://dimemag.com/2013/05/fast-five-the-cavs-should-shock-the-world-take-lebrons-replacement-in-the-nba-draft-otto-porter-jr/"
+  #       "Daily NBA News, NBA Trades, NBA Rumors, Basketball Videos, Sneakers  » Blog Archive  The Cavs Should Take LeBron's Replacement In The Draft"
+  #       "FAST FIVE: THE CAVS SHOULD SHOCK THE WORLD & TAKE LEBRON’S REPLACEMENT IN THE NBA DRAFT: OTTO PORTER JR."
+  #
+  #     "http://mlb.mlb.com/mlb/gameday/index.jsp?gid=2013_05_22_minmlb_atlmlb_1&mode=recap_home&c_id=atl"
+  #       "braves.com: Gameday"
+  #       "Gattis' slam powers Braves' sixth straight win"
+  #
+  #     "http://sportsillustrated.cnn.com/baseball/mlb/gameflash/2013/05/22/48111/index.html#recap?xid=si_mlb"
+  #       "Los Angeles Dodgers vs. Milwaukee Brewers"
+  #       "After Mattingly criticism, Dodgers top Brewers 9-2"
+  #
+  #     "http://stats.newyork.cbslocal.com/mlb/recap.asp?g=330522121"
+  #       "Scores & Stats"
+  #       "Phillips' strange double lifts Reds over Mets 7-4"
+  #
+  #     "http://www.astroscounty.com/2013/05/draft-update.html"
+  #       "Your Neighborhood Astros Blog & Grill"
+  #       "Draft Update"
+  #
+  #     "http://www.baltimorebeatdown.com/2013/5/22/4356624/flacco-filling-out"
+  #       "Baltimore Beat Down"
+  #       "Flacco Filling Out"
+  #   end
+  # end
 end
