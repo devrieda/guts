@@ -17,7 +17,7 @@ page = Guts::Document.new(html_text)
 # optionally pass in the url and site name
 url  = http://online.wsj.com/article/SB10001424127887323975004578501134104800170.html
 name = "The Wall Street Journal"
-page = Guts::Document.new(html_text, :url => url, :name => name)
+page = Guts::Document.new(html_text, :url => url, :site_name => name)
 
 page.headline
 => "Rivera's So-Called Retirement"

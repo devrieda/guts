@@ -1,11 +1,16 @@
 module Guts
   class Document
-    attr_accessor :html, :url, :name
+    attr_accessor :html, :url
 
     def initialize(input, options = {})
       @html = input
-      @url  = options[:url]
-      @name = options[:name]
+
+      @url       = options[:url]
+      @site_name = options[:site_name]
+    end
+
+    def site_name
+      @site_name ||= parse_site_name
     end
 
     def title
@@ -71,6 +76,11 @@ module Guts
 
     def clean_newlines(text)
       text.gsub(/\n+/, "\n")
+    end
+
+    def parse_site_name
+      site_name = html_doc.css("meta[property='og:site_name']")
+      site_name.attribute("content").value if site_name.length > 0
     end
 
     def block_elements

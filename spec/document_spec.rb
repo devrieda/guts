@@ -26,17 +26,24 @@ describe Document do
     end
   end
 
-  describe "#name" do
+  describe "#site_name" do
     let(:html) { read_fixture("index.html") }
 
     it "should return the site name" do
-      doc = Document.new(html, :name => "SportSpyder")
-      expect(doc.name).to eq "SportSpyder"
+      doc = Document.new(html, :site_name => "SportSpyder")
+      expect(doc.site_name).to eq "SportSpyder"
     end
 
-    it "should return nil if no url provided" do
+    it "should return nil if no site name provided" do
       doc = Document.new(html)
-      expect(doc.name).to be_nil
+      expect(doc.site_name).to be_nil
+    end
+
+    it "should parse site name" do
+      html = read_fixture("og_sitename.html")
+      doc  = Document.new(html)
+
+      expect(doc.site_name).to eq "Baltimore Beat Down"
     end
   end
 
