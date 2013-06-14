@@ -22,7 +22,7 @@ module Guts
     end
 
     def body
-      @body ||= cleaned_markup.css("body").children.to_s.strip
+      BodyParser.new(self).body
     end
 
     def headline
