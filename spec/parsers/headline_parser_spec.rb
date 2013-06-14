@@ -145,6 +145,20 @@ describe HeadlineParser do
         expect(parser.headline).to eq "SEC baseball LSU sends Bama"
       end
 
+      it "parses the headline from the title separated by double colon" do
+        doc = Document.new(read_fixture("headlines/title_double_colon.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+
+      it "parses the headline from the title separated by bull" do
+        doc = Document.new(read_fixture("headlines/title_bull.html"))
+        parser = HeadlineParser.new(doc)
+
+        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+      end
+
       it "parses the headline from the title with no separators" do
         doc = Document.new(read_fixture("headlines/no_title_separators.html"))
         parser = HeadlineParser.new(doc)

@@ -96,7 +96,7 @@ module Guts
     end
 
     def title_separators
-      [" | ", " « ", " » ", " - ", ": "]
+      [" | ", " « ", " » ", " - ", ": ", " • "]
     end
 
     def site_name
