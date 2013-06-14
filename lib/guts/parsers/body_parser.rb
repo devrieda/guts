@@ -6,7 +6,7 @@ module Guts
       @document = document
     end
 
-    def body
+    def parse
       html_doc.css("body").children.to_s.strip
     end
 

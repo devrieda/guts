@@ -10,14 +10,14 @@ describe HeadlineParser do
         doc = Document.new(read_fixture("headlines/h1.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
 
       it "parses headline from h1 and title with spaces" do
         doc = Document.new(read_fixture("headlines/h1_spaces.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
 
       it "parses headline from h1 with multiple h1s in title" do
@@ -26,42 +26,42 @@ describe HeadlineParser do
 
         expected = "Sounders’ travel guru figures next four games could call " +
                    "for 10 flights; among toughest he’s arranged"
-        expect(parser.headline).to eq expected
+        expect(parser.parse).to eq expected
       end
 
       it "skips false positive from 'blog' text from h1 and title" do
         doc = Document.new(read_fixture("headlines/h1_blog.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
 
       it "skips false positive from 'blog' text from h2 and title" do
         doc = Document.new(read_fixture("headlines/h1_blog2.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
 
       it "skips false positive from site name in title" do
         doc = Document.new(read_fixture("og_sitename.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "Flacco Filling Out"
+        expect(parser.parse).to eq "Flacco Filling Out"
       end
 
       it "parses headline from h2 and title" do
         doc = Document.new(read_fixture("headlines/h2.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
 
       it "parses headline from h3 and title" do
         doc = Document.new(read_fixture("headlines/h3.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
     end
 
@@ -70,14 +70,14 @@ describe HeadlineParser do
         doc = Document.new(read_fixture("headlines/h1_headline_semantics.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "Fast Five: The Cavs Should Shock The World & Take LeBrons Replacement In The NBA Draft: Otto Porter Jr."
+        expect(parser.parse).to eq "Fast Five: The Cavs Should Shock The World & Take LeBrons Replacement In The NBA Draft: Otto Porter Jr."
       end
 
       it "doesn't parses headline from h1 that doesn't looks like a headline" do
         doc = Document.new(read_fixture("headlines/h1_headline_no_semantics.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
     end
 
@@ -86,84 +86,84 @@ describe HeadlineParser do
         doc = Document.new(read_fixture("headlines/title_separator_frequency.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "Grit-N-Grind - We Knew Game Two Was Going to Be Different"
+        expect(parser.parse).to eq "Grit-N-Grind - We Knew Game Two Was Going to Be Different"
       end
 
       it "parses the headline to use the separator by order" do
         doc = Document.new(read_fixture("headlines/title_separator_order.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "Dennis Seidenberg on playing Game 4: \"There's a chance for sure\""
+        expect(parser.parse).to eq "Dennis Seidenberg on playing Game 4: \"There's a chance for sure\""
       end
 
       it "parses the headline from the title separated by pipes" do
         doc = Document.new(read_fixture("headlines/title_pipes.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
 
       it "parses the headline from the title separated by pipes reverse ordered" do
         doc = Document.new(read_fixture("headlines/title_pipes_reverse.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
 
       it "parses the headline from the title separated by dashes" do
         doc = Document.new(read_fixture("headlines/title_dashes.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
 
       it "parses the headline from the title separated by dashes with semantic dashes" do
         doc = Document.new(read_fixture("headlines/title_dashes_semantic.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "Grit-N-Grind: We Knew Game Two Was Going to Be Different"
+        expect(parser.parse).to eq "Grit-N-Grind: We Knew Game Two Was Going to Be Different"
       end
 
       it "parses the headline from the title separated by laquo" do
         doc = Document.new(read_fixture("headlines/title_laquo.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
 
       it "parses the headline from the title separated by raquo" do
         doc = Document.new(read_fixture("headlines/title_raquo.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
 
       it "parses the headline from the title separated by colon" do
         doc = Document.new(read_fixture("headlines/title_colon.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
 
       it "parses the headline from the title separated by double colon" do
         doc = Document.new(read_fixture("headlines/title_double_colon.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
 
       it "parses the headline from the title separated by bull" do
         doc = Document.new(read_fixture("headlines/title_bull.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
 
       it "parses the headline from the title with no separators" do
         doc = Document.new(read_fixture("headlines/no_title_separators.html"))
         parser = HeadlineParser.new(doc)
 
-        expect(parser.headline).to eq "SEC baseball LSU sends Bama"
+        expect(parser.parse).to eq "SEC baseball LSU sends Bama"
       end
     end
 
@@ -172,7 +172,7 @@ describe HeadlineParser do
     #   doc = Document.new(File.read(file))
     #   head = HeadlineParser.new(doc)
     #
-    #   puts "\n#{i+1}. #{head.headline}--------------"
+    #   puts "\n#{i+1}. #{head.parse}--------------"
     #   puts File.open(file) {|f| f.readline }.gsub("<!-- ", "").gsub(" -->", "").strip
     #
     #   # `open #{url}`
@@ -184,7 +184,7 @@ describe HeadlineParser do
   #   it "should parse" do
   #     doc = Document.new(read_fixture("articles/dimemag.com"))
   #     parser = HeadlineParser.new(doc)
-  #     p parser.headline
+  #     p parser.parse
   #
   #     "http://bostonherald.com/sports/bruins_nhl/bruins_insider/2013/05/rangers_taking_it_one_game_a_time_stralman_likely_out_for"
   #       "Bruins Insider"

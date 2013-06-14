@@ -6,7 +6,7 @@ module Guts
       @document = document
     end
 
-    def headline
+    def parse
       @headline = headline_from_headings_in_title ||
                   headline_from_semantic_headlines ||
                   headline_from_title

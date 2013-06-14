@@ -22,11 +22,11 @@ module Guts
     end
 
     def body
-      BodyParser.new(self).body
+      BodyParser.new(self).parse
     end
 
     def headline
-      HeadlineParser.new(self).headline
+      HeadlineParser.new(self).parse
     end
 
     def text_tag_ratio(calculator = nil)
