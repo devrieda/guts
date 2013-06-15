@@ -17,7 +17,7 @@ describe TextTagRatioCalculator do
     end
   end
 
-  describe "#calculate" do
+  describe "#ttr_array" do
     let(:body) do
       "<p class=\"post_metadata\">\n    This entry was posted on April 18th, 2013\n    " +
       "Follow responses through the <a href=\"http://derekdevries.com/\">RSS 2.0</a>" +
@@ -37,8 +37,38 @@ describe TextTagRatioCalculator do
                   0.0,   # <h2 id="comments"></h2>
                   7.0,   # <h2 id="post_comment">Post a comment</h2>
                   0.0]   # </div>
-      expect(ttr.calculate).to eq expected
+      expect(ttr.ttr_array).to eq expected
     end
   end
+
+  describe "#ttr_smoothed" do
+    let(:body) do
+      "<p class=\"post_metadata\">\n    This entry was posted on April 18th, 2013\n    " +
+      "Follow responses through the <a href=\"http://derekdevries.com/\">RSS 2.0</a>" +
+      " feed.\n    You can skip to the end to leave a response.\n  </p>\n  " +
+      "<div class=\"post_comments\" id=\"respond\">\n    <h2 id=\"comments\"></h2>\n    " +
+      "<h2 id=\"post_comment\">Post a comment</h2>\n  </div>"
+    end
+    let(:ttr) { TextTagRatioCalculator.new(body) }
+
+    # 12.4
+    # 21.2
+    # 21.2
+    # 21.2
+
+    it "should smooth out histogram of ttr ration" do
+      expected = [12.4,  # <p class="post_metadata">
+                  21.2,  # This entry was posted on April 18th, 2013
+                  21.2,  # Follow responses through <a href='http://example.com/'>RSS 2.0</a>.
+                  21.2,  # You can skip to the end to leave a response.
+                  13.0,  # </p>
+                  10.2,  # <div class="post_comments" id="respond">
+                   1.4,  # <h2 id="comments"></h2>
+                   1.4,  # <h2 id="post_comment">Post a comment</h2>
+                   1.4]  # </div>
+      expect(ttr.ttr_smoothed).to eq expected
+    end
+  end
+
 
 end
