@@ -51,11 +51,6 @@ describe TextTagRatioCalculator do
     end
     let(:ttr) { TextTagRatioCalculator.new(body) }
 
-    # 12.4
-    # 21.2
-    # 21.2
-    # 21.2
-
     it "should smooth out histogram of ttr ration" do
       expected = [12.4,  # <p class="post_metadata">
                   21.2,  # This entry was posted on April 18th, 2013
