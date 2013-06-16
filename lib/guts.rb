@@ -12,6 +12,7 @@ require 'guts/parsers/body_parser'
 require 'guts/parsers/headline_parser'
 require 'guts/parsers/image_parser'
 require 'guts/cluster/cluster'
+require 'guts/cluster/kmeans'
 
 module Guts
 end
