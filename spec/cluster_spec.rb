@@ -7,4 +7,14 @@ describe Cluster do
       expect(c.center).to eq 20
     end
   end
+
+  describe "#<<" do
+    it "should add a value to the cluster values" do
+      c = Cluster.new(20)
+      expect(c.values).to eq []
+
+      c << 10
+      expect(c.values).to eq [10]
+    end
+  end
 end

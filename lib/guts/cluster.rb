@@ -5,4 +5,8 @@ class Cluster
     @center = center
     @values = []
   end
+
+  def <<(value)
+    @values << value
+  end
 end
