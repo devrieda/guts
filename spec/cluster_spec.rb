@@ -17,4 +17,18 @@ describe Cluster do
       expect(c.values).to eq [10]
     end
   end
+
+  describe "#recenter!" do
+    it "should recenter the cluster based on the average of the points" do
+      c = Cluster.new(20)
+      c << 10
+      c << 20
+      c << 30
+      c << 40
+      expect(c.center).to eq 20
+
+      c.recenter!
+      expect(c.center).to eq 25
+    end
+  end
 end
