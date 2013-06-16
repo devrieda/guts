@@ -10,6 +10,10 @@ class Cluster
     @values << value
   end
 
+  def clear_values!
+    self.values = []
+  end
+
   # reset the center and return delta moved
   def recenter!
     old_center = @center

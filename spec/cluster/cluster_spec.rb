@@ -18,6 +18,17 @@ describe Cluster do
     end
   end
 
+  describe "#clear_values!" do
+    it "should clear the values from the cluster" do
+      c = Cluster.new(20)
+      c << 10
+      expect(c.values).to eq [10]
+
+      c.clear_values!
+      expect(c.values).to eq []
+    end
+  end
+
   describe "#recenter!" do
     it "should recenter the cluster based on the average of the points" do
       c = Cluster.new(20)
