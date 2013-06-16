@@ -16,6 +16,8 @@ class Cluster
 
   # reset the center and return delta moved
   def recenter!
+    return 0 if @values.length == 0
+
     old_center = @center
     @center = @values.inject(:+) / @values.length.to_f
 

@@ -41,5 +41,14 @@ describe Cluster do
       c.recenter!
       expect(c.center).to eq 25
     end
+
+    it "should recenter with no values" do
+      c = Cluster.new(20)
+      expect(c.center).to eq 20
+
+      c.recenter!
+      expect(c.center).to eq 20
+    end
   end
+
 end
