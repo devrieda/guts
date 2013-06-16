@@ -8,6 +8,17 @@ describe Cluster do
     end
   end
 
+  describe "#to_s" do
+    it "should display cluster as string" do
+      c = Cluster.new(20)
+      c << 10
+      c << 20
+      c << 30
+
+      expect(c.to_s).to eq "<Cluster 20:[10, 20, 30]>"
+    end
+  end
+
   describe "#<<" do
     it "should add a value to the cluster values" do
       c = Cluster.new(20)

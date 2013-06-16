@@ -6,6 +6,10 @@ class Cluster
     @values = []
   end
 
+  def to_s
+    "<Cluster #{center}:#{values.inspect}>"
+  end
+
   def <<(value)
     @values << value
   end
