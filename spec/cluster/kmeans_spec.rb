@@ -10,11 +10,11 @@ describe Kmeans do
     end
   end
 
-  describe "#calculate" do
+  describe "#run" do
     it "should assign points to the number of clusters specified" do
       kmeans = Kmeans.new([1, 2, 3, 4, 5], 2, 0.001)
 
-      clusters = kmeans.calculate
+      clusters = kmeans.run
       expect(clusters.length).to eq 2
     end
   end

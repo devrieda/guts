@@ -10,7 +10,7 @@ class Kmeans
     end
   end
 
-  def calculate
+  def run
     begin
       assign_points_to_clusters
     end while max_delta >= @delta
