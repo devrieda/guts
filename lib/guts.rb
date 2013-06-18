@@ -11,6 +11,8 @@ require 'guts/parsers/date_parser'
 require 'guts/parsers/body_parser'
 require 'guts/parsers/headline_parser'
 require 'guts/parsers/image_parser'
+
+require 'guts/cluster/point'
 require 'guts/cluster/cluster'
 require 'guts/cluster/kmeans'
 
