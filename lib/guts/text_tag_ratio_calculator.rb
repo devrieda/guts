@@ -5,7 +5,7 @@ module Guts
     end
 
     def calculate
-      ttr_array
+      ttr_smoothed
     end
 
     def lines
