@@ -11,4 +11,8 @@ class Point
     ys = (@y - point.y) ** 2
     Math::sqrt(xs + ys)
   end
+
+  def to_s
+    "(#{x}, #{y})"
+  end
 end

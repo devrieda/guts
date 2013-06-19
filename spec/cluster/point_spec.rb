@@ -17,4 +17,11 @@ describe Point do
       expect(p1.dist_to(p2)).to eq 3.0
     end
   end
+
+  describe "#to_s" do 
+    it "should display point coordinates" do 
+      p1 = Point.new(9, 12)
+      expect(p1.to_s).to eq "(9, 12)"
+    end
+  end
 end
