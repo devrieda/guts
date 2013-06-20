@@ -1,12 +1,12 @@
 class Kmeans
-  attr_reader :values, :clusters
+  attr_reader :points, :clusters
 
-  def initialize(values, k, delta=0.001)
-    @values = values
+  def initialize(points, k, delta=0.001)
+    @points = points
     @delta  = delta
 
     @clusters = (1..k).map do |i|
-      Cluster.new(values.sample)
+      Cluster.new(points.sample)
     end
   end
 
@@ -21,19 +21,19 @@ class Kmeans
   private
 
   def assign_points_to_clusters
-    @clusters.each {|cluster| cluster.clear_values! }
+    @clusters.each {|cluster| cluster.clear_points! }
 
-    @values.each do |value|
-      closest = closest_cluster(value)
-      closest << value
+    @points.each do |point|
+      closest = closest_cluster(point)
+      closest << point
     end
   end
 
-  def closest_cluster(value)
+  def closest_cluster(point)
     closest, min_dist = nil
 
     @clusters.each do |cluster|
-      dist = (value - cluster.center).abs
+      dist = point.distance_to(cluster.center)
       min_dist ||= dist
 
       if dist <= min_dist
