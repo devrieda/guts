@@ -6,7 +6,7 @@ class Point
     @y = y
   end
 
-  def dist_to(point)
+  def distance_to(point)
     xs = (@x - point.x) ** 2
     ys = (@y - point.y) ** 2
     Math::sqrt(xs + ys)

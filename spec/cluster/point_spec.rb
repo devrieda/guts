@@ -9,12 +9,12 @@ describe Point do
     end
   end
 
-  describe "#dist_to" do
+  describe "#distance_to" do
     it "should measure distance to another point" do
       p1 = Point.new(9, 9)
       p2 = Point.new(9, 12)
 
-      expect(p1.dist_to(p2)).to eq 3.0
+      expect(p1.distance_to(p2)).to eq 3.0
     end
   end
 
