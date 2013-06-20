@@ -1,30 +1,32 @@
 class Cluster
-  attr_accessor :center, :values
+  attr_accessor :center, :points
 
   def initialize(center)
     @center = center
-    @values = []
+    @points = []
   end
 
   def to_s
-    "<Cluster #{center}:#{values.inspect}>"
+    "<Cluster #{center}:#{points.inspect}>"
   end
 
   def <<(value)
-    @values << value
+    @points << value
   end
 
-  def clear_values!
-    self.values = []
+  def clear_points!
+    self.points = []
   end
 
   # reset the center and return delta moved
   def recenter!
-    return 0 if @values.length == 0
-
+    return 0 if @points.length == 0
     old_center = @center
-    @center = @values.inject(:+) / @values.length.to_f
 
-    (old_center - @center).abs
+    ave_x = @points.map {|p| p.x }.inject(:+) / points.length
+    ave_y = @points.map {|p| p.y }.inject(:+) / points.length
+
+    @center = Point.new(ave_x, ave_y)
+    old_center.distance_to(center)
   end
 end
