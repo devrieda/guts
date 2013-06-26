@@ -28,6 +28,10 @@ module Guts
       end
     end
 
+    def points
+      ttr_smoothed.each_with_index.map {|v, k| Point.new(k, v) }
+    end
+
     def smooth_mean(elements)
       elements.inject(:+) / (smooth_radius * 2 + 1)
     end
