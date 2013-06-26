@@ -220,10 +220,8 @@ describe Document do
     let(:html) { read_fixture("parse_ttr.html") }
 
     it "should call calculate" do
-      calculator = double("ttr")
-      calculator.should_receive(:calculate)
-
-      Document.new(html).text_tag_ratio(calculator)
+      ttr = Document.new(html).text_tag_ratio
+      expect(ttr).to be_a(TextTagRatioCalculator)
     end
   end
 

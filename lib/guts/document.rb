@@ -29,8 +29,8 @@ module Guts
       HeadlineParser.new(self).parse
     end
 
-    def text_tag_ratio(calculator = nil)
-      (calculator || ttr_calculator).calculate
+    def text_tag_ratio
+      TextTagRatioCalculator.new(body)
     end
 
     def cleaned_markup
@@ -40,10 +40,6 @@ module Guts
     end
 
     private
-
-    def ttr_calculator
-      TextTagRatioCalculator.new(body)
-    end
 
     def strip_scripts_and_frames
       strip = "style, script, noscript, frameset, frame, noframes, iframe"
